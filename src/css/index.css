@@ -1,0 +1,66 @@
+:root {
+  background-color: #f5f7fb;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-container {
+  width: 50vw;
+  height: 30vh;
+  color: #293264;
+  text-align: center;
+}
+
+.home-container > h1 {
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 700;
+}
+
+.home-container > p {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  padding: 20px;
+}
+
+.start-quiz-button {
+  width: 15em;
+  height: 3em;
+  font-weight: 500;
+  font-size: 20px;
+  background: #4d5b9e;
+  border-radius: 15px;
+  color: #f5f7fb;
+  cursor: pointer;
+}
+
+.blob1 {
+  position: absolute;
+  width: 50vw;
+  height: 50vh;
+  left: 70vw;
+  top: -5vh;
+  background-color: #fffad1;
+  transform: rotate(-128.49deg);
+  border-radius: 70% 30% 30% 70%;
+}
+
+.blob2 {
+  position: absolute;
+  width: 50vw;
+  height: 50vh;
+  left: -10vw;
+  top: 70vh;
+  background-color: #deebf8;
+  transform: rotate(30deg);
+  border-radius: 30% 70% 70% 30%;
+}

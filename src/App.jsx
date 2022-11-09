@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import "./css/index.css";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Home";
+import Quiz from "./Quiz";
 
 export default function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="App">
-      <h1>Hello</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/quiz" element={<Quiz />} />
+      </Routes>
     </div>
   );
 }
