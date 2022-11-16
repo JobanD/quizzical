@@ -1,55 +1,43 @@
 import React, { useState, useEffect } from "react";
 
 export default function Question(props) {
-  //const [isClicked, setIsClicked] = useState(false);
-  const options = [];
-  options.push({
-    id: 1,
-    value: props.answer,
-    isClicked: false,
-    isCorrect: true,
-  });
-  props.wrongAnswers.map((op, i) =>
-    options.push({
-      id: i + 2,
-      value: op[i],
-      isClicked: false,
-      isCorrect: false,
-    })
-  );
-  const [optionsState, setOptionsState] = useState(options);
-  const styles = {
-    backgroundColor: optionsState.isClicked ? "blue" : "white",
-  };
-  // randomize options so that correct answer is not always in the same spot
+  // state used to store selected option
+  const [selected, setSelected] = useState(0);
+
   function randomizeOptions(arr) {
     return arr.sort(() => Math.random() - 0.5);
   }
-  randomizeOptions(options);
-  console.log(optionsState);
-  //
-  //
-  function onClick(id) {
-    console.log(id);
-    setOptionsState((prevState) =>
-      prevState.map((op) => {
-        return op.id === id ? { ...op, isClicked: !op.isClicked } : op;
-      })
-    );
-  }
 
-  console.log(optionsState);
+  // state used to store object containing information about each potential answer
+  const [optionsObj, setOptionsObj] = useState(() =>
+    randomizeOptions(props.options).map((op, i) => {
+      return {
+        id: i,
+        value: op,
+        isClicked: false,
+      };
+    })
+  );
 
-  const formatOptions = optionsState.map((op) => (
-    <button className="option" onClick={() => onClick(op.id)} style={styles}>
-      {op.value}
+  const change = (row) => {
+    setSelected(row.id);
+  };
+
+  const formatOptions = optionsObj?.map((item) => (
+    <button
+      key={item.id}
+      className="button"
+      onClick={() => change(item)}
+      style={{ backgroundColor: item.id === selected ? "#D6DBF5" : "white" }}
+    >
+      {item.value.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gim, "")}
     </button>
   ));
 
   return (
-    <div className="question-container">
+    <div className="question">
       <h3>{props.question}</h3>
-      {formatOptions}
+      <div className="buttons-container">{formatOptions}</div>
       <br></br>
     </div>
   );

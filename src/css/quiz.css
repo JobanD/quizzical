@@ -1,0 +1,76 @@
+:root {
+  background-color: #f5f7fb;
+}
+
+body {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  color: #293264;
+}
+.quiz-container {
+  width: 50vw;
+  height: 80vh;
+  display: flex;
+  flex-basis: 100%;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.question-container {
+  flex-basis: 100%;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  border-radius: 10px;
+  width: 10vw;
+  font-size: 2vh;
+  align-content: center;
+  text-align: center;
+  overflow: visible;
+}
+
+.blob1 {
+  position: absolute;
+  width: 50vw;
+  height: 50vh;
+  left: 70vw;
+  top: -5vh;
+  background-color: #fffad1;
+  transform: rotate(-128.49deg);
+  border-radius: 70% 30% 30% 70%;
+  z-index: -1;
+}
+
+.blob2 {
+  position: absolute;
+  width: 40vw;
+  height: 50vh;
+  left: -10vw;
+  top: 70vh;
+  background-color: #deebf8;
+  transform: rotate(30deg);
+  border-radius: 30% 70% 70% 30%;
+  z-index: -1;
+}
+
+.submit-button {
+  color: #f5f7fb;
+  background-color: #4d5b9e;
+  font-size: large;
+  border-radius: 10px;
+  width: 20vw;
+  height: 6vh;
+}
+
+.submit-button-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
