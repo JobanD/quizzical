@@ -36,6 +36,7 @@ export default function Quiz() {
       ["gt", ">"],
       ["nbsp", " "],
       ["quot", '"'],
+      ["eacute", "é"],
     ];
 
     if (str && typeof str === "string") {
