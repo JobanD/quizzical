@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Question from "./Question";
 import { nanoid } from "nanoid";
 import "./css/quiz.css";
@@ -7,7 +7,22 @@ export default function Quiz() {
   const [quiz, setQuiz] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const answers = useRef([null, null, null, null, null]);
+  const [completed, setCompleted] = useState(false); // toggle on completion of quiz
+  const [score, setScore] = useState(0);
 
+  // to use with redo quiz button
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
+  // update answer array
+  // use to compare answers to correct answers when quiz submitted
+  function updateAnswer(value, questionID) {
+    return (answers.current[questionID] = value);
+  }
+
+  // this function takes out html entities that are present in the data taken from the api
   function decodeHTMLEntities(str) {
     var entities = [
       ["amp", "&"],
@@ -15,6 +30,7 @@ export default function Quiz() {
       ["#x27", "'"],
       ["#x2F", "/"],
       ["#39", "'"],
+      ["#039", "'"],
       ["#47", "/"],
       ["lt", "<"],
       ["gt", ">"],
@@ -36,7 +52,7 @@ export default function Quiz() {
     return str;
   }
 
-  // Fetch API and set States with received data
+  // Fetch API and set States with received data ON MOUNT
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5")
       .then((response) => {
@@ -47,12 +63,35 @@ export default function Quiz() {
       })
       .then((data) => {
         setQuiz(data.results);
+        setError(null);
       })
-      .catch((error) => setError(error));
+      .catch((error) => {
+        setError(error.message);
+        setQuiz(null);
+      })
+      .finally(() => {
+        setLoading(false);
+        setCompleted(false);
+      });
 
     setLoading(false);
   }, [loading]);
 
+  // function to run on click of check answers
+  // highlight correct/incorrect answers, give user a score, and provide option to play again
+  function checkAnswers() {
+    let count = [];
+    quiz.map((q, i) =>
+      q.correct_answer == answers.current[i]
+        ? count++
+        : console.log("incorrect")
+    );
+    setCompleted(true);
+    setScore((prevScore) => (prevScore = count));
+  }
+
+  // create question components with custom question component
+  // encompasses quiz question + the multiple choice answers
   const questionsAll = quiz.map((q, i) => (
     <Question
       key={nanoid()}
@@ -61,7 +100,10 @@ export default function Quiz() {
       wrongAnswers={q.incorrect_answers}
       options={[q.correct_answer, ...q.incorrect_answers]}
       decode={decodeHTMLEntities}
-      id={i + 1}
+      id={i}
+      updateAnswer={updateAnswer}
+      completed={completed}
+      userAnswers={answers}
     />
   ));
 
@@ -72,7 +114,18 @@ export default function Quiz() {
       </div>
       <div className="question-container">{questionsAll}</div>
       <div className="submit-button-container">
-        <button className="submit-button">Check Answers</button>
+        {completed ? (
+          <>
+            <h3>You scored {score}/5 correct answers</h3>
+            <button className="submit-button" onClick={refreshPage}>
+              Redo Quiz
+            </button>
+          </>
+        ) : (
+          <button className="submit-button" onClick={checkAnswers}>
+            Check Answers
+          </button>
+        )}
       </div>
       <div className="blob2">
         <p></p>
