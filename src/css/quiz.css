@@ -8,6 +8,10 @@ body {
   justify-content: center;
   color: #293264;
 }
+
+button {
+  cursor: pointer;
+}
 .quiz-container {
   width: 50vw;
   height: 80vh;
