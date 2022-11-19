@@ -37,7 +37,8 @@ export default function Quiz() {
       ["nbsp", " "],
       ["quot", '"'],
       ["eacute", "é"],
-      ["ldquo", '"'][("rdquo", '"')],
+      ["ldquo", '"'],
+      ["rdquo", '"'],
     ];
 
     if (str && typeof str === "string") {
